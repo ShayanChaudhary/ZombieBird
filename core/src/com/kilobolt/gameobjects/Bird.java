@@ -29,11 +29,40 @@ public class Bird {
         if (velocity.y > 200) {
             velocity.y = 200;
         }
+        //update y position based on velocity
         position.add(velocity.cpy().scl(delta));
+
+        //update rotation
+        // Rotate counterclockwise
+        if (velocity.y < 0) {
+            //scaled by delta to keep rotation constant on fast/slow devices.
+            rotation -= 600 * delta;
+
+            if (rotation < -20) {
+                rotation = -20;
+            }
+        }
+        // Rotate clockwise
+        if (isFalling()) {
+            //scaled by delta to keep rotation constant on fast/slow devices.
+            rotation += 480 * delta;
+            if (rotation > 90) {
+                rotation = 90;
+            }
+
+        }
 
         //perform boundary checks
         if(position.y > 200) {position.y = 200;}
         if(position.y <0) {position.y = 0;}
+    }
+
+    public boolean isFalling() {
+        return velocity.y > 110;
+    }
+
+    public boolean shouldntFlap() {
+        return velocity.y > 70;
     }
 
     public void onClick() {
