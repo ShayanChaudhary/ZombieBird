@@ -11,6 +11,7 @@ import java.util.Random;
 public class Pipe extends Scrollable {
 
     private Random r;
+    private boolean isScored = false;
 
     private Rectangle skullUp, skullDown, barUp, barDown;
     public static final int VERTICAL_GAP = 45;
@@ -30,6 +31,7 @@ public class Pipe extends Scrollable {
         barUp = new Rectangle();
         barDown = new Rectangle();
         this.groundY = groundY;
+
     }
 
     @Override
@@ -62,6 +64,7 @@ public class Pipe extends Scrollable {
         super.reset(newX);
         // Change the height to a random number
         height = r.nextInt(90) + 15;
+        isScored = false;
     }
 
     //given a bird, check if this scrollable collides.
@@ -90,5 +93,15 @@ public class Pipe extends Scrollable {
     public Rectangle getBarDown() {
         return barDown;
     }
+
+    public boolean isScored() {
+        return isScored;
+    }
+
+    public void setScored(boolean b) {
+        isScored = b;
+    }
+
+
 
 }

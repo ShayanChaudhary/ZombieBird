@@ -97,34 +97,34 @@ public class GameRenderer {
         batcher.draw(skullUp, pipe1.getX() - 1,
                 pipe1.getY() + pipe1.getHeight() - 14, 24, 14);
         batcher.draw(skullDown, pipe1.getX() - 1,
-                pipe1.getY() + pipe1.getHeight() + 45, 24, 14);
+                pipe1.getY() + pipe1.getHeight() + Pipe.VERTICAL_GAP, 24, 14);
 
         batcher.draw(skullUp, pipe2.getX() - 1,
                 pipe2.getY() + pipe2.getHeight() - 14, 24, 14);
         batcher.draw(skullDown, pipe2.getX() - 1,
-                pipe2.getY() + pipe2.getHeight() + 45, 24, 14);
+                pipe2.getY() + pipe2.getHeight() + Pipe.VERTICAL_GAP, 24, 14);
 
         batcher.draw(skullUp, pipe3.getX() - 1,
                 pipe3.getY() + pipe3.getHeight() - 14, 24, 14);
         batcher.draw(skullDown, pipe3.getX() - 1,
-                pipe3.getY() + pipe3.getHeight() + 45, 24, 14);
+                pipe3.getY() + pipe3.getHeight() + Pipe.VERTICAL_GAP, 24, 14);
     }
 
     private void drawPipes() {
         batcher.draw(bar, pipe1.getX(), pipe1.getY(), pipe1.getWidth(),
                 pipe1.getHeight());
-        batcher.draw(bar, pipe1.getX(), pipe1.getY() + pipe1.getHeight() + 45,
-                pipe1.getWidth(), midPointY + 66 - (pipe1.getHeight() + 45));
+        batcher.draw(bar, pipe1.getX(), pipe1.getY() + pipe1.getHeight() + Pipe.VERTICAL_GAP,
+                pipe1.getWidth(), midPointY + 66 - (pipe1.getHeight() + Pipe.VERTICAL_GAP));
 
         batcher.draw(bar, pipe2.getX(), pipe2.getY(), pipe2.getWidth(),
                 pipe2.getHeight());
-        batcher.draw(bar, pipe2.getX(), pipe2.getY() + pipe2.getHeight() + 45,
-                pipe2.getWidth(), midPointY + 66 - (pipe2.getHeight() + 45));
+        batcher.draw(bar, pipe2.getX(), pipe2.getY() + pipe2.getHeight() + Pipe.VERTICAL_GAP,
+                pipe2.getWidth(), midPointY + 66 - (pipe2.getHeight() + Pipe.VERTICAL_GAP));
 
         batcher.draw(bar, pipe3.getX(), pipe3.getY(), pipe3.getWidth(),
                 pipe3.getHeight());
-        batcher.draw(bar, pipe3.getX(), pipe3.getY() + pipe3.getHeight() + 45,
-                pipe3.getWidth(), midPointY + 66 - (pipe3.getHeight() + 45));
+        batcher.draw(bar, pipe3.getX(), pipe3.getY() + pipe3.getHeight() + Pipe.VERTICAL_GAP,
+                pipe3.getWidth(), midPointY + 66 - (pipe3.getHeight() + Pipe.VERTICAL_GAP));
     }
 
     public void render(float runTime) {
@@ -172,6 +172,15 @@ public class GameRenderer {
                     bird.getHeight() / 2.0f, bird.getWidth(), bird.getHeight(),
                     1, 1, bird.getRotation());
         }
+
+        //DRAW SCORE
+        // Convert integer into String
+        String score = myWorld.getScore() + "";
+        // Draw shadow first
+        AssetLoader.shadow.draw(batcher, "" + myWorld.getScore(), (136 / 2) - (3 * score.length()), 12);
+        // Draw text
+        AssetLoader.font.draw(batcher, "" + myWorld.getScore(), (136 / 2) - (3 * score.length() - 1), 11);
+
         batcher.end();
         // End SpriteBatch ====================================
 
@@ -180,42 +189,42 @@ public class GameRenderer {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
         //draw bird collision circle
-        shapeRenderer.setColor(Color.BLUE);
-        shapeRenderer.circle(bird.getBoundingCircle().x, bird.getBoundingCircle().y, bird.getBoundingCircle().radius);
-        //draw pipe rectangels
-        shapeRenderer.setColor(Color.RED);
-        // Bar up for pipes 1 2 and 3
-        shapeRenderer.rect(pipe1.getBarUp().x, pipe1.getBarUp().y,
-                pipe1.getBarUp().width, pipe1.getBarUp().height);
-        shapeRenderer.rect(pipe2.getBarUp().x, pipe2.getBarUp().y,
-                pipe2.getBarUp().width, pipe2.getBarUp().height);
-        shapeRenderer.rect(pipe3.getBarUp().x, pipe3.getBarUp().y,
-                pipe3.getBarUp().width, pipe3.getBarUp().height);
-
-        // Bar down for pipes 1 2 and 3
-        shapeRenderer.rect(pipe1.getBarDown().x, pipe1.getBarDown().y,
-                pipe1.getBarDown().width, pipe1.getBarDown().height);
-        shapeRenderer.rect(pipe2.getBarDown().x, pipe2.getBarDown().y,
-                pipe2.getBarDown().width, pipe2.getBarDown().height);
-        shapeRenderer.rect(pipe3.getBarDown().x, pipe3.getBarDown().y,
-                pipe3.getBarDown().width, pipe3.getBarDown().height);
-
-        // Skull up for Pipes 1 2 and 3
-        shapeRenderer.rect(pipe1.getSkullUp().x, pipe1.getSkullUp().y,
-                pipe1.getSkullUp().width, pipe1.getSkullUp().height);
-        shapeRenderer.rect(pipe2.getSkullUp().x, pipe2.getSkullUp().y,
-                pipe2.getSkullUp().width, pipe2.getSkullUp().height);
-        shapeRenderer.rect(pipe3.getSkullUp().x, pipe3.getSkullUp().y,
-                pipe3.getSkullUp().width, pipe3.getSkullUp().height);
-
-        // Skull down for Pipes 1 2 and 3
-        shapeRenderer.rect(pipe1.getSkullDown().x, pipe1.getSkullDown().y,
-                pipe1.getSkullDown().width, pipe1.getSkullDown().height);
-        shapeRenderer.rect(pipe2.getSkullDown().x, pipe2.getSkullDown().y,
-                pipe2.getSkullDown().width, pipe2.getSkullDown().height);
-        shapeRenderer.rect(pipe3.getSkullDown().x, pipe3.getSkullDown().y,
-                pipe3.getSkullDown().width, pipe3.getSkullDown().height);
-
+//        shapeRenderer.setColor(Color.BLUE);
+//        shapeRenderer.circle(bird.getBoundingCircle().x, bird.getBoundingCircle().y, bird.getBoundingCircle().radius);
+//        //draw pipe rectangels
+//        shapeRenderer.setColor(Color.RED);
+//        // Bar up for pipes 1 2 and 3
+//        shapeRenderer.rect(pipe1.getBarUp().x, pipe1.getBarUp().y,
+//                pipe1.getBarUp().width, pipe1.getBarUp().height);
+//        shapeRenderer.rect(pipe2.getBarUp().x, pipe2.getBarUp().y,
+//                pipe2.getBarUp().width, pipe2.getBarUp().height);
+//        shapeRenderer.rect(pipe3.getBarUp().x, pipe3.getBarUp().y,
+//                pipe3.getBarUp().width, pipe3.getBarUp().height);
+//
+//        // Bar down for pipes 1 2 and 3
+//        shapeRenderer.rect(pipe1.getBarDown().x, pipe1.getBarDown().y,
+//                pipe1.getBarDown().width, pipe1.getBarDown().height);
+//        shapeRenderer.rect(pipe2.getBarDown().x, pipe2.getBarDown().y,
+//                pipe2.getBarDown().width, pipe2.getBarDown().height);
+//        shapeRenderer.rect(pipe3.getBarDown().x, pipe3.getBarDown().y,
+//                pipe3.getBarDown().width, pipe3.getBarDown().height);
+//
+//        // Skull up for Pipes 1 2 and 3
+//        shapeRenderer.rect(pipe1.getSkullUp().x, pipe1.getSkullUp().y,
+//                pipe1.getSkullUp().width, pipe1.getSkullUp().height);
+//        shapeRenderer.rect(pipe2.getSkullUp().x, pipe2.getSkullUp().y,
+//                pipe2.getSkullUp().width, pipe2.getSkullUp().height);
+//        shapeRenderer.rect(pipe3.getSkullUp().x, pipe3.getSkullUp().y,
+//                pipe3.getSkullUp().width, pipe3.getSkullUp().height);
+//
+//        // Skull down for Pipes 1 2 and 3
+//        shapeRenderer.rect(pipe1.getSkullDown().x, pipe1.getSkullDown().y,
+//                pipe1.getSkullDown().width, pipe1.getSkullDown().height);
+//        shapeRenderer.rect(pipe2.getSkullDown().x, pipe2.getSkullDown().y,
+//                pipe2.getSkullDown().width, pipe2.getSkullDown().height);
+//        shapeRenderer.rect(pipe3.getSkullDown().x, pipe3.getSkullDown().y,
+//                pipe3.getSkullDown().width, pipe3.getSkullDown().height);
+//
 
 
         shapeRenderer.end();

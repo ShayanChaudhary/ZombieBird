@@ -1,5 +1,9 @@
 package com.kilobolt.gameobjects;
 
+import com.badlogic.gdx.Game;
+import com.kilobolt.Helpers.AssetLoader;
+import com.kilobolt.gameworld.GameWorld;
+
 /**
  * Created by Shayan on 10/06/2015.
  */
@@ -8,7 +12,7 @@ public class ScrollHandler {
     // ScrollHandler will create all five objects that we need.
     private Grass frontGrass, backGrass;
     private Pipe pipe1, pipe2, pipe3;
-
+    private GameWorld gameWorld;
     // ScrollHandler will use the constants below to determine
     // how fast we need to scroll and also determine
     // the size of the gap between each pair of pipes.
@@ -19,7 +23,8 @@ public class ScrollHandler {
 
     // Constructor receives a float that tells us where we need to create our
     // Grass and Pipe objects.
-    public ScrollHandler(float yPos) {
+    public ScrollHandler(GameWorld gameworld, float yPos) {
+        this.gameWorld = gameworld;
         frontGrass = new Grass(0, yPos, 143, 11, SCROLL_SPEED);
         backGrass = new Grass(frontGrass.getTailX(), yPos, 143, 11,
                 SCROLL_SPEED);
@@ -43,7 +48,6 @@ public class ScrollHandler {
             pipe1.reset(pipe3.getTailX() + PIPE_GAP);
         } else if (pipe2.isScrolledLeft()) {
             pipe2.reset(pipe1.getTailX() + PIPE_GAP);
-
         } else if (pipe3.isScrolledLeft()) {
             pipe3.reset(pipe2.getTailX() + PIPE_GAP);
         }
@@ -68,6 +72,27 @@ public class ScrollHandler {
 
     // Return true if ANY pipe hits the bird.
     public boolean collides(Bird bird) {
+        if (!pipe1.isScored()
+                && pipe1.getX() + (pipe1.getWidth() / 2) < bird.getX()
+                + bird.getWidth()) {
+            addScore(1);
+            pipe1.setScored(true);
+            AssetLoader.coin.play();
+        } else if (!pipe2.isScored()
+                && pipe2.getX() + (pipe2.getWidth() / 2) < bird.getX()
+                + bird.getWidth()) {
+            addScore(1);
+            pipe2.setScored(true);
+            AssetLoader.coin.play();
+
+        } else if (!pipe3.isScored()
+                && pipe3.getX() + (pipe3.getWidth() / 2) < bird.getX()
+                + bird.getWidth()) {
+            addScore(1);
+            pipe3.setScored(true);
+            AssetLoader.coin.play();
+
+        }
         return (pipe1.collides(bird) || pipe2.collides(bird) || pipe3.collides(bird));
     }
 
@@ -92,4 +117,7 @@ public class ScrollHandler {
         return pipe3;
     }
 
+    private void addScore(int increment) {
+        gameWorld.addScore(increment);
+    }
 }
