@@ -67,6 +67,11 @@ public class Pipe extends Scrollable {
         isScored = false;
     }
 
+    public void onRestart(float x, float scrollSpeed) {
+        velocity.x = scrollSpeed;
+        reset(x);
+    }
+
     //given a bird, check if this scrollable collides.
     public boolean collides(Bird bird) {
         if (position.x < bird.getX() + bird.getWidth()) {
